@@ -1,0 +1,24 @@
+delete HW4.txt; diary HW4.txt 
+echo on
+%4a
+f=@(x)x^2*exp(-x^2);
+subplot(4,1,1)
+fplot(f,[0,2])
+
+%4b
+f=@(x,y)x^3+y^3-6*x*y;
+subplot(4,1,2)
+ezplot(f,[-1,4])
+
+%4c
+t=0:pi/50:(12*pi);
+subplot(4,1,3)
+plot3(cos(t),sin(t),t)
+
+%4d
+[x,y] = meshgrid(0:.2:2,0:.2:2);
+z=x.^2+y.^2;
+subplot(4,1,4)
+mesh(x,y,z)
+
+echo off; diaryb o

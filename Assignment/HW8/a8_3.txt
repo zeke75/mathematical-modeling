@@ -1,0 +1,43 @@
+% Problem 3
+
+function distance=a8_3(theta)
+
+g=9.81; b=0.065; h0=0.18; v0=13.686431338562331;
+rhs = @(t,y) [y(2);-b*sqrt(y(2)^2+y(4)^2)*y(2);y(4);-g-b*sqrt(y(2)^2+y(4)^2)*y(4)];
+options = odeset('Events',@subevents);
+[t,y,te,ye,ie] = ode45(rhs,[0 5],[0;v0*cos(pi/180*theta);h0;v0*sin(pi/180*theta)],options);
+distance = ye(1);
+%
+function [lookfor stop direction] = subevents(t,y)
+lookfor = y(3); 
+stop = 1;    
+direction = 0; 
+
+a8_3(5) = 4.1224
+a8_3(10) = 5.8460
+a8_3(15) = 7.3426
+a8_3(20) = 8.5432
+a8_3(25) = 9.4495
+a8_3(30) = 10.0772
+a8_3(35) = 10.4418
+a8_3(40) = 10.5562
+a8_3(45) = 10.4304
+a8_3(50) = 10.0727
+a8_3(55) = 9.4902
+a8_3(60) = 8.6894
+a8_3(65) = 7.6778
+a8_3(70) = 6.4647
+a8_3(75) = 5.0635
+a8_3(80) = 3.4943
+a8_3(85) = 1.7898
+
+angle=5:5:85;
+distance=[4.37 5.23 6.95 7.84 8.17 8.69 8.81 8.99 8.95 8.83 8.19 7.84 7.12 6.38 5.08 3.34 2.13];
+distance2=[4.12 5.85 7.34 8.54 9.45 10.08 10.44 10.56 10.43 10.07 9.49 8.69 7.68 6.46 5.06 3.49 1.79];
+plot(angle,distance,'o',angle,distance2,'*')
+
+error=norm(distance-distance2)
+
+error =
+
+    4.0473

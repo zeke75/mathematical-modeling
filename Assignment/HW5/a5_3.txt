@@ -1,0 +1,36 @@
+%Problem 3
+load linearsystemregressiondata
+%design matrix
+F1=[ones(size(y1)) x1 x2 zeros(size(y1)) zeros(size(y1))];
+F2=[zeros(size(y1)) x2 zeros(size(y1)) ones(size(y1)) x1];
+F=[F1;F2];
+y=[y1;y2];
+p=F\y
+sd = sqrt(norm(y-F*p,2)^2/157)
+%For 95% confidence interval l=stut(157,0.95)=1.9752
+l = 1.9752;
+V = inv(F'*F);
+error = l*sqrt(sd^2*diag(V))
+
+p =
+
+    1.0289
+    1.9777
+    2.9327
+    3.9528
+    4.8832
+
+%% I guess your choice of parameters should be p1=1, p2=2, p3=3, p4=4, p5=5
+
+sd =
+
+    0.9824
+
+error =
+
+    0.2156
+    0.1181
+    0.1670
+    0.2156
+    0.1670
+

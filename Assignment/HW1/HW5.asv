@@ -1,0 +1,51 @@
+%5a
+mymatrix.name = 'My favorite matrix';
+mymatrix.value = [1 1 1 1;1 2 3 4;1 4 9 16;1 8 27 64];
+mymatrix.eigenvalue = eig(mymatrix.value);
+
+%5b
+mymatr{1} = 'My favorite matrix';
+mymatr{2} = [1 1 1 1;1 2 3 4;1 4 9 16;1 8 27 64];
+mymatr{3} = eig(mymatr{2});
+
+echo off; diary off
+
+mymatrix
+
+mymatrix = 
+
+          name: 'My favorite matrix'
+         value: [4x4 double]
+    eigenvalue: [4x1 double]
+
+mymatrix.value(3,4)
+
+ans =
+
+    16
+
+mymatrix.eigenvalue(3)
+
+ans =
+
+    0.7168
+
+mymatr
+
+mymatr = 
+
+    'My favorite matrix'    [4x4 double]    [4x1 double]
+
+mymatr{2}(3,4)
+
+ans =
+
+    16
+
+mymatr{3}(3)
+
+ans =
+
+    0.7168
+
+diary off

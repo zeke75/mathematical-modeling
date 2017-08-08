@@ -1,0 +1,18 @@
+%Problem2
+
+function v=a2(P0,t,r)
+v=(1+r)^t*P0*r/((1+r)^t-1);
+
+
+
+
+
+
+
+a2(20000,60,.05/12)
+
+ans =
+
+  377.4247
+
+diary off

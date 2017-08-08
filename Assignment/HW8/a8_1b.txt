@@ -1,0 +1,44 @@
+% Problem 1b
+
+tic;
+mu = 1000;
+vdprhs = @(t,y) [y(2); mu*(1-y(1)^2)*y(2)-y(1)];
+[t,y] = ode45(vdprhs,[0 10],[2;0]);
+toc;
+Elapsed time is 2.533082 seconds.
+
+tic;
+mu = 1000;
+vdprhs = @(t,y) [y(2); mu*(1-y(1)^2)*y(2)-y(1)];
+[t,y] = ode15s(vdprhs,[0 10],[2;0]);
+toc;
+Elapsed time is 0.100032 seconds.
+
+tic;
+mu = 1000;
+vdprhs = @(t,y) [y(2); mu*(1-y(1)^2)*y(2)-y(1)];
+[t,y] = ode23s(vdprhs,[0 10],[2;0]);
+toc;
+Elapsed time is 0.014911 seconds.
+
+tic;
+mu = 1000;
+vdprhs = @(t,y) [y(2); mu*(1-y(1)^2)*y(2)-y(1)];
+[t,y] = ode23t(vdprhs,[0 10],[2;0]);
+toc;
+Elapsed time is 0.018834 seconds.
+
+tic;
+mu = 1000;
+vdprhs = @(t,y) [y(2); mu*(1-y(1)^2)*y(2)-y(1)];
+[t,y] = ode23tb(vdprhs,[0 10],[2;0]);
+toc;
+Elapsed time is 0.011972 seconds.
+
+%% I choose solver ode23tb
+%% solve ODE for [0,5000]
+
+mu = 1000;
+vdprhs = @(t,y) [y(2); mu*(1-y(1)^2)*y(2)-y(1)];
+[t,y] = ode23tb(vdprhs,[0 5000],[2;0]);
+plot(t,y(:,1))

@@ -1,0 +1,46 @@
+%Problem 1
+decades=0:10:220;
+pops=[3.93 5.31 7.24 9.64 12.87 17.07 23.19 31.44 39.82 50.16 62.95 75.99...
+        91.97 105.71 122.78 131.67 151.33 179.32 203.21 226.5 249.63 281.42 308.75];
+
+y = @(p,t) p(2)*p(3)./((p(3).^p(4)+(p(2).^p(4)-p(3).^p(4))*exp(-p(1)*t)).^(1./p(4)))
+%Initial estimate of parameters get from logistic model where a=1
+p0 = [0.0208 486.8046 8.2241 1]
+[p error]=lsqcurvefit(y,p0,decades,pops,[-inf,-inf,-inf,0],[])
+sd=sqrt(error/(length(decades)-4))
+%Plot model along with data
+modelpops = y(p,decades);
+plot(decades,pops,'o',decades,modelpops)
+title({'Plot of data and model', 'parameters found by nonlinear regression'},'FontSize',15)
+xlabel('Decades, 1790-2010')
+ylabel('U. S. Populations')
+
+
+y = 
+
+    @(p,t)p(2)*p(3)./((p(3).^p(4)+(p(2).^p(4)-p(3).^p(4))*exp(-p(1)*t)).^(1./p(4)))
+
+p0 =
+
+  1.0e+002 *
+
+   0.000208000000000   4.868046000000000   0.082241000000000   0.010000000000000
+
+Optimization terminated: relative function value
+ changing by less than OPTIONS.TolFun.
+
+p =
+
+  1.0e+003 *
+
+   0.000006086374806   1.390652903609799   0.004370872677935   0.000000000605121
+
+error =
+
+    1.915647280265175e+002
+
+sd =
+
+   3.175272288585472
+
+%% The standard deviation of logistic and Gorpertz model(get from class and last homework) are 4.97 and 3.09, respectively. Thus Gorpertz model is the best model from this family for fitting U.S. population growth.

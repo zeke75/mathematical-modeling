@@ -1,0 +1,56 @@
+%Problem 4
+
+load systemregressiondata2
+%Define the error
+E=@(p)norm(y1-p(1)*x1.^p(2)-p(3)*exp(p(4)*x2))^2+norm(y2-p(5)*exp(p(4)*x1)-p(6)*x2.^p(2))^2;
+%Minimize the error with fminsearch
+%For initial guess, get orders correct
+p0 = [.01 .1 .01 .1 1 1];
+[p Emin]=fminsearch(E,p0)
+sd = sqrt(Emin/(length(y1)-length(p0)))
+
+% Find 95% confidence intervals for parameters
+p(1) = -0.0969; p(2) = 0.2004; p(3) = 0.0561; p(4) = 0.3987; p(5) = 5.0391; p(6) = 5.9503;
+dely = [y1-p(1)*x1.^p(2)-p(3)*exp(p(4)*x2); y2-p(5)*exp(p(4)*x1)-p(6)*x2.^p(2)];
+%Define the design matrix
+F1=[x1.^p(2)        p(1)*log(x1).*x1.^p(2) exp(p(4)*x2)    p(3)*exp(p(4)*x2).*x2 zeros(size(y1)) zeros(size(y1))];
+F2=[zeros(size(y2)) p(6)*log(x2).*x2.^p(2) zeros(size(y2)) p(5)*exp(p(4)*x1).*x1 exp(p(4)*x1)    x2.^p(2)       ];  
+F =[F1;F2];
+%Compute the parameter differences
+delp = F\dely
+%Linear standard deviation
+lsd = sqrt(norm(dely - F*delp)^2/156);
+%For 95% confidence interval l=stut(156,0.95)=1.9753
+l = 1.9753;
+V = inv(F'*F);
+error = l*sqrt(lsd^2*diag(V))
+
+p =
+
+   -0.0969    0.2004    0.0561    0.3987    5.0391    5.9503
+
+Emin =
+
+    0.3956
+
+sd =
+
+    0.0726
+
+delp =
+
+    0.1069
+   -0.0006
+   -0.0262
+    0.0008
+   -0.0226
+    0.0318
+
+error =
+
+    0.0099
+    0.0022
+    0.0029
+    0.0011
+    0.0338
+    0.0521

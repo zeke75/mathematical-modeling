@@ -1,0 +1,30 @@
+% Problem 5b
+function sirnonlinearfit
+
+global days S I;
+days=[0 3 4 5 6 7 8 9 10 11 12 13 14];
+S=[762 740 650 400 250 120 80 50 20 18 15 13 10];
+I=[1 20 80 220 300 260 240 190 120 80 20 5 2];
+
+guess = [.0036; .9395];
+[p,error]=fminsearch(@sirerr, guess);
+a = p(1)
+b = p(2)
+s = sqrt(error/(2*(length(S)-1)-length(p))) 
+%
+[t,y]=ode45(@sirrhs,[0,14],[S(1); I(1)],[],p);
+subplot(2,1,1)
+plot(t,y(:,1),days,S,'o')
+title('Susceptible Individuals, model and data','FontSize',14)
+subplot(2,1,2)
+plot(t,y(:,2),days,I,'o')
+title('Infected Individuals, model and data','FontSize',14)
+%
+function error = sirerr(p)
+global days S I;
+[t,y] = ode45(@sirrhs,days,[S(1);I(1)],[],p);  
+value = norm(y(:,1)-S')^2+norm(y(:,2)-I')^2;
+error = sum(value);
+%
+function value = sirrhs(t,y,p)
+value=[-p(1)*y(1)*y(2);p(1)*y(1)*y(2)-p(2)*y(2)];
